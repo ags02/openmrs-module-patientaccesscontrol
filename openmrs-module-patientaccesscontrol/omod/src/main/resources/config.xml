@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+
+	<!-- Module Properties -->
+	<id>${project.parent.artifactId}</id>
+	<name>${project.parent.name}</name>
+	<version>${project.parent.version}</version>
+	<package>${project.parent.groupId}.${project.parent.artifactId}</package>
+	<author>Spencer</author>
+	<description>
+		${project.parent.description}
+	</description>
+	<updateURL>https://modules.openmrs.org/modules/download/${project.parent.artifactId}/update.rdf</updateURL>
+	<require_version>${openMRSVersion}</require_version>
+	<!-- / Module Properties -->
+
+	
+	<!-- Module Activator -->
+	<activator>${project.parent.groupId}.${project.parent.artifactId}.PatientAccessControlActivator</activator>
+	
+	
+	<!-- Adds link to admin page -->
+	<extension>
+		<point>org.openmrs.admin.list</point>
+		<class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.AdminList</class>
+	</extension>
+	
+	<!-- Adds link to gutter -->
+	<extension>
+	    <point>org.openmrs.gutter.tools</point>
+	    <class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.GutterListExt</class>
+	</extension>
+	
+	<extension>
+	    <point>org.openmrs.patientDashboard.overviewBox</point>
+	    <class>${project.parent.groupId}.${project.parent.artifactId}.extension.html.PatientOverviewExt</class>
+	</extension>
+	
+	
+	<!-- Advisors -->
+	<advice>
+		<point>org.openmrs.api.PatientService</point>
+		<class>@MODULE_PACKAGE@.api.advice.PatientServiceAdvisor</class>
+	</advice>
+	
+	<advice>
+		<point>org.openmrs.api.ProgramWorkflowService</point>
+		<class>@MODULE_PACKAGE@.api.advice.ProgramWorkflowServiceAdvice</class>
+	</advice>
+	
+	<advice>
+		<point>org.openmrs.api.UserService</point>
+		<class>@MODULE_PACKAGE@.api.advice.UserServiceAdvice</class>
+	</advice>
+	
+	<privilege>
+		<name>Manage Role Program</name>
+		<description>Able to manage and configure role program access controls</description>
+	</privilege>
+	
+	<privilege>
+		<name>View Role Program</name>
+		<description>Able to view role program access controls</description>
+	</privilege>
+	
+	<privilege>
+		<name>Manage Role Patient</name>
+		<description>Able to manage and configure role patient access controls</description>
+	</privilege>
+	
+	<privilege>
+		<name>View Role Patient</name>
+		<description>Able to view role patient access controls</description>
+	</privilege>
+	
+	<privilege>
+		<name>Refer Patient</name>
+		<description>Able to refer a patient to another user</description>
+	</privilege>
+	
+	<dwr>
+        <allow>
+            <create creator="new" javascript="DWRModulePatientService">
+                <param name="class" value="@MODULE_PACKAGE@.web.dwr.DWRModulePatientService"/>
+                <include method="listPatients"/>
+                <include method="listCountAndPatients"/>
+                <include method="referPatientToUser"/>
+            </create>
+        </allow>
+ 
+        <signatures>
+            <![CDATA[
+            import @MODULE_PACKAGE@.web.dwr.DWRModulePatientService;
+            DWRModulePatientService.listBatchOfPatients(String searchValue, List<Integer> conceptIds, boolean includeVoided, Integer start, Integer length);
+			DWRModulePatientService.listPatients(String searchValue, List<Integer> conceptIds, boolean includeVoided);
+			DWRModulePatientService.listCountAndPatients(String searchValue, List<Integer> conceptIds, Integer start, Integer length, boolean getMatchCount);
+			DWRModulePatientService.referPatientToUser(Integer patientId, Integer userId);
+            ]]>
+        </signatures>
+    </dwr>
+	
+	<!-- Maps hibernate file's, if present -->
+	<mappingFiles>				
+		PatientAccessControl.hbm.xml				
+	</mappingFiles>
+	
+	<!-- Required Global Properties --> 
+	<globalProperty>
+		<property>patientaccesscontrol.checkAllAccessControls</property>
+		<defaultValue>true</defaultValue>
+		<description>
+			If true, user must have access to both patient and program. Otherwise, satisfying any one access control will grant user access. 
+		</description>
+	</globalProperty>
+
+	<!-- Internationalization -->
+	<!-- All message codes should start with ${project.parent.artifactId}. -->
+	<messages>
+		<lang>en</lang>
+		<file>messages.properties</file>
+	</messages>
+	<!-- /Internationalization -->
+
+</module>
+

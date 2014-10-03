@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  
+  <patientaccesscontrol_user_patient user_patient_id="1" patient_id="6" user_id="5505" uuid="3d10d0f4-6195-40f9-9f71-e5a41dfd2829" />  
+  <patientaccesscontrol_user_patient user_patient_id="2" patient_id="8" user_id="5505" uuid="3d10d0f4-6195-40f9-9f71-e5a41dfd2823" />  
+  <patientaccesscontrol_user_patient user_patient_id="3" patient_id="2" user_id="5506" uuid="0984be71-651f-4ed1-9e1d-2a9f39b07bc8" />
+  <patientaccesscontrol_user_patient user_patient_id="4" patient_id="6" user_id="5507" uuid="0984be71-651f-4ed1-9e1d-2a9f39b07bc8" />
+  
+</dataset>

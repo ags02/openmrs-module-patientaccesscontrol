@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  
+  <patientaccesscontrol_role_patient role_patient_id="1" patient_id="6" role="Some Role" uuid="3d10d0f4-6195-40f9-9f71-e5a41dfd2829" />
+  
+  <patientaccesscontrol_role_patient role_patient_id="4" patient_id="8" role="Parent" uuid="3d10d0f4-6195-40f9-9f71-e5a41dfd2823" />
+  
+  <patientaccesscontrol_role_patient role_patient_id="5" patient_id="2" role="Some Role" uuid="0984be71-651f-4ed1-9e1d-2a9f39b07bc8" />
+  <patientaccesscontrol_role_patient role_patient_id="6" patient_id="2" role="Parent" uuid="8135495f-6dc5-47c3-b67b-49011f3a9c85" />
+  <patientaccesscontrol_role_patient role_patient_id="7" patient_id="2" role="Anonymous" uuid="ff252bad-bcb6-4161-b413-8ba538df8065" />
+  <patientaccesscontrol_role_patient role_patient_id="8" patient_id="2" role="Authenticated" uuid="a1a918f4-c09e-4f28-956c-036256aa3f52" />
+  
+</dataset>

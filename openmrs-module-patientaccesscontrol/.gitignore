@@ -1,0 +1,18 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/.settings
+/.project
+/api/.settings
+/api/.classpath
+/api/.project
+/omod/target
+/omod/.classpath
+/omod/.project
+/omod/.settings
+
+/api/TestReport.html
+/api/test-output
