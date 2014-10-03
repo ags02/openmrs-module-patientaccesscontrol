@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.patientaccesscontrol">
+
+	<class name="RoleProgram" table="patientaccesscontrol_role_program">
+	
+		<cache usage="read-write"/>
+
+		<id name="id" type="int" column="role_program_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="role" class="org.openmrs.Role" not-null="true" column="role" />
+		
+		<many-to-one name="program" class="org.openmrs.Program" not-null="false" column="program_id" />
+				
+		<property name="uuid" not-null="true" type="java.lang.String" column="uuid" />
+		
+	</class>
+	
+	<class name="RolePatient" table="patientaccesscontrol_role_patient">
+	
+		<cache usage="read-write"/>
+
+		<id name="id" type="int" column="role_patient_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="role" class="org.openmrs.Role" not-null="true" column="role" />
+		
+		<many-to-one name="patient" class="org.openmrs.Patient" not-null="true" column="patient_id" />
+				
+		<property name="uuid" not-null="true" type="java.lang.String" column="uuid" />
+		
+	</class>
+	
+	<class name="UserPatient" table="patientaccesscontrol_user_patient">
+	
+		<cache usage="read-write"/>
+
+		<id name="id" type="int" column="user_patient_id" unsaved-value="0">
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="user" class="org.openmrs.User" not-null="true" column="user_id" />
+		
+		<many-to-one name="patient" class="org.openmrs.Patient" not-null="true" column="patient_id" />
+				
+		<property name="uuid" not-null="true" type="java.lang.String" column="uuid" />
+		
+	</class>
+	
+	<joined-subclass name="ModulePatient" table="patient" extends="org.openmrs.Patient">
+		<key column="patient_id" not-null="true" on-delete="cascade" />
+		
+		<!-- Associations -->
+
+		<!-- list is unsorted due so that its put into a LinkedHashSet which uses .hashcode() instead of .compareTo() -->
+		<set name="patientPrograms" lazy="true" cascade="all-delete-orphan"
+			table="patient_program" inverse="true" sort="unsorted">
+			<key not-null="true" column="patient_id" />
+			<one-to-many class="org.openmrs.PatientProgram" />
+		</set>
+    </joined-subclass>
+
+</hibernate-mapping>

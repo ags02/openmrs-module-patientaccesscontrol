@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    <!--
+        See http://www.liquibase.org/manual/home#available_database_refactorings
+        for a list of supported elements and attributes
+    -->
+	
+	<changeSet author="Spencer" id="patientaccesscontrol-2013-10-31-22:48">
+		<createTable tableName="patientaccesscontrol_role_program">
+			<column autoIncrement="true" name="role_program_id" type="int">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="role" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column defaultValueNumeric="0" name="program_id" type="int">
+				<constraints nullable="true" />
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint constraintName="role_program_program_fk"
+			baseTableName="patientaccesscontrol_role_program" baseColumnNames="program_id"
+			referencedTableName="program" referencedColumnNames="program_id" />
+		<addForeignKeyConstraint constraintName="role_program_role_fk"
+			baseTableName="patientaccesscontrol_role_program" baseColumnNames="role"
+			referencedTableName="role" referencedColumnNames="role" />
+		<createIndex indexName="role_program_role_program_unique"
+			tableName="patientaccesscontrol_role_program" unique="true">
+			<column name="role" />
+			<column name="program_id" />
+		</createIndex>
+		<modifySql dbms="mssql">
+			<replace replace="CHAR(38)"
+				with="UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID()" />
+		</modifySql>
+	</changeSet>
+	
+	<changeSet author="Spencer" id="patientaccesscontrol-2013-11-07-12:35">
+		<createTable tableName="patientaccesscontrol_role_patient">
+			<column autoIncrement="true" name="role_patient_id" type="int">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="role" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="patient_id" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint constraintName="role_patient_patient_fk"
+			baseTableName="patientaccesscontrol_role_patient" baseColumnNames="patient_id"
+			referencedTableName="patient" referencedColumnNames="patient_id" />
+		<addForeignKeyConstraint constraintName="role_patient_role_fk"
+			baseTableName="patientaccesscontrol_role_patient" baseColumnNames="role"
+			referencedTableName="role" referencedColumnNames="role" />
+		<createIndex indexName="role_patient_role_patient_unique"
+			tableName="patientaccesscontrol_role_patient" unique="true">
+			<column name="role" />
+			<column name="patient_id" />
+		</createIndex>
+		<modifySql dbms="mssql">
+			<replace replace="CHAR(38)"
+				with="UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID()" />
+		</modifySql>
+	</changeSet>
+	
+	<changeSet author="Spencer" id="patientaccesscontrol-2013-11-19-22:06">
+		<createTable tableName="patientaccesscontrol_user_patient">
+			<column autoIncrement="true" name="user_patient_id" type="int">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_id" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="patient_id" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="uuid" type="char(38)">
+				<constraints nullable="false" unique="true" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint constraintName="user_patient_patient_fk"
+			baseTableName="patientaccesscontrol_user_patient" baseColumnNames="patient_id"
+			referencedTableName="patient" referencedColumnNames="patient_id" />
+		<addForeignKeyConstraint constraintName="user_patient_user_fk"
+			baseTableName="patientaccesscontrol_user_patient" baseColumnNames="user_id"
+			referencedTableName="users" referencedColumnNames="user_id" />
+		<createIndex indexName="user_patient_user_patient_unique"
+			tableName="patientaccesscontrol_user_patient" unique="true">
+			<column name="user_id" />
+			<column name="patient_id" />
+		</createIndex>
+		<modifySql dbms="mssql">
+			<replace replace="CHAR(38)"
+				with="UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID()" />
+		</modifySql>
+	</changeSet>
+    
+</databaseChangeLog>
